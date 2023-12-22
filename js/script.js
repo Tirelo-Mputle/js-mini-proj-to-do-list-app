@@ -1,7 +1,8 @@
 const input = document.querySelector(".input");
 const inputForm = document.querySelector("form");
 const submitBtn = document.querySelector(".submit-btn");
-let todosArray = [];
+const todosContainer = document.querySelector(".todos-container");
+let todoListItemsArray = [];
 /**
  * Clears the to do input field after the user adds the to do to the list of to dos
  */
@@ -13,17 +14,35 @@ const clearTodoInputField = () => {
  */
 const addTodoItemToList = () => {
   const todoItem = input.value;
-  todosArray = [...todosArray, { todoItem, id: crypto.randomUUID() }];
-  clearTodoInputField()
-  console.log(todosArray);
+  if (todoItem !== "") {
+    todoListItemsArray = [
+      ...todoListItemsArray,
+      { todoItem, id: crypto.randomUUID() },
+    ];
+  }
+  clearTodoInputField();
+  console.log(todoListItemsArray);
 };
-
-input.addEventListener("input", (e) => {
-  e.preventDefault();
-});
+const displayTodoListItems = () => {
+  const fragment = new DocumentFragment();
+  todoListItemsArray.forEach((todo) => {
+    const todoItem = document.createElement("li");
+    todoItem.classList.add("todoListItem");
+    todoItem.innerHTML = `
+   <div>
+   <p>${todo.todoItem}</p>
+   </div>`;
+    fragment.appendChild(todoItem);
+  });
+  todosContainer.innerHTML = "";
+  todosContainer.appendChild(fragment);
+};
 inputForm.addEventListener("submit", (e) => {
   e.preventDefault();
-
   addTodoItemToList();
+  displayTodoListItems();
 });
-submitBtn.addEventListener("click", addTodoItemToList);
+submitBtn.addEventListener("click", () => {
+  addTodoItemToList();
+  displayTodoListItems();
+});
