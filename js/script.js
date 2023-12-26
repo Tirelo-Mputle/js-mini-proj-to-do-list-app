@@ -52,7 +52,7 @@ const displayTodoListItems = () => {
     todoItem.classList.add("todoListItem");
     todoItem.innerHTML = `
    
-   <p>${todo.todoItem}</p>
+   <p class="todo-text">${todo.todoItem}</p>
    <div class="todoItemIcons">
    <button data-action="edit">Edit</button>
    <button data-action="delete">Delete</button>
@@ -63,6 +63,8 @@ const displayTodoListItems = () => {
       const actionType = e.target.dataset.action;
       if(actionType ==="edit"){
         console.log("EDITTING")
+        const todoText = todoItem.querySelector(".todo-text");
+        todoText.innerHTML=`<input type="text"/>`
       }
       if(actionType ==="delete"){
         console.log("DELETING")
