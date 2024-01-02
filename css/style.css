@@ -35,25 +35,55 @@ main {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .input-btn-container {
- 
   width: 100%;
   display: grid;
   grid-template-columns: 3fr 1fr;
   height: 1.8rem;
   border-radius: 0.5rem;
 }
-.input{
-    padding-left: 0.5rem;
+.input {
+  padding-left: 0.5rem;
 }
-.input:focus{
-    outline: 2px solid var(--darkBlue);
-    border:none;
-    background-color: var(--inputBackground);
+.input:focus {
+  outline: 2px solid var(--darkBlue);
+  border: none;
+  background-color: var(--inputBackground);
 }
-.submit-btn:hover{
-    background-color: var(--darkBlue);
-    color: var(--white);
-    border:2px solid var(--darkBlue);
-    border-top-right-radius: 0.2rem;
-    border-bottom-right-radius: 0.2rem;
+.submit-btn:hover {
+  background-color: var(--darkBlue);
+  color: var(--white);
+  border: 2px solid var(--darkBlue);
+  border-top-right-radius: 0.2rem;
+  border-bottom-right-radius: 0.2rem;
+}
+/* TO DOs */
+.todos-container {
+  margin-top: 2rem;
+}
+/* todoListItem */
+.todoListItem {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.todoListItem:hover {
+  background-color: var(--inputBackground);
+}
+.todoItemIcons {
+  display: flex;
+  gap: 1rem;
+}
+
+.alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  display: none;
+}
+.show-alert {
+  display: block;
+}
+.alert-success {
+  background-color: rgb(226, 255, 183);
 }
