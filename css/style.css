@@ -87,3 +87,7 @@ main {
 .alert-success {
   background-color: rgb(226, 255, 183);
 }
+/* edit button */
+.editting{
+  background-color: rgb(84, 247, 84);
+}
