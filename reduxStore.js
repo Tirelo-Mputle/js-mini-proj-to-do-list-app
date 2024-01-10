@@ -41,11 +41,19 @@ const todoSlice = createSlice({
         }
       });
     },
+    clearTodos: (state) => {
+      state.todoListItemsArray = [];
+    },
   },
 });
 
-export const { addTodoToList, toggleAlert, editTodoOn, deleteTodo } =
-  todoSlice.actions;
+export const {
+  addTodoToList,
+  toggleAlert,
+  editTodoOn,
+  deleteTodo,
+  clearTodos,
+} = todoSlice.actions;
 
 export const store = configureStore({
   reducer: todoSlice.reducer,
