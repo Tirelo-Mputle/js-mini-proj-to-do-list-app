@@ -1,4 +1,4 @@
-import { input, alert, todosContainer } from "./script.js";
+import { input, alert, todosContainer, clearTodosBtn } from "./script.js";
 import {
   store,
   toggleAlert,
@@ -15,15 +15,26 @@ export const clearTodoInputField = () => {
 /**
  * Displays alert when user adds an item to the list of todos
  */
-export const displayAlert = () => {
+export const displayAlert = (type) => {
   store.dispatch(toggleAlert());
   if (store.getState().isAlertVisible) {
-    alert.classList.add("alert-success", "show-alert");
-    alert.textContent = `Successfully added to do to list!`;
+    let alertColor;
+    let alertText;
+    if (type === "addTodo") {
+      alertColor = "alert-success";
+      alertText = `Successfully added to do to list!`;
+    }
+    if (type === "deleteTodo") {
+      alertColor = "alert-delete";
+      alertText = `Deleted item from do to list!`;
+      console.log("deleting!!");
+    }
+    alert.classList.add(alertColor, "show-alert");
+    alert.textContent = alertText;
     //remove alert after 3 seconds
     setTimeout(() => {
       store.dispatch(toggleAlert());
-      alert.classList.remove("alert-success", "show-alert");
+      alert.classList.remove(alertColor, "show-alert");
     }, 3000);
     //cleartimeout
   }
@@ -36,7 +47,7 @@ export const addTodoItemToList = () => {
   const todoItem = input.value;
   if (todoItem !== "") {
     store.dispatch(addTodoToList(todoItem));
-    displayAlert();
+    displayAlert("addTodo");
     clearTodoInputField();
   }
 };
@@ -80,6 +91,7 @@ export function displayTodoListItems() {
   const todoList = store.getState().todoListItemsArray;
   if (todoList.length === 0) {
     todosContainer.innerHTML = `<p>No to do added yet.</p>`;
+    // clearTodosBtn.classList.add("hidden");
   } else {
     todoList.forEach((todo) => {
       const todoItem = document.createElement("li");
@@ -102,6 +114,7 @@ export function displayTodoListItems() {
         }
         if (actionType === "delete") {
           store.dispatch(deleteTodo(todoItem.dataset.id));
+          displayAlert("deleteTodo");
           displayTodoListItems();
         }
       });
@@ -111,5 +124,6 @@ export function displayTodoListItems() {
     });
     todosContainer.innerHTML = "";
     todosContainer.appendChild(fragment);
+    // clearTodosBtn.classList.remove("hidden");
   }
 }

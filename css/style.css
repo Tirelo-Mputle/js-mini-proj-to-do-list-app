@@ -87,7 +87,13 @@ main {
 .alert-success {
   background-color: rgb(226, 255, 183);
 }
+.alert-delete {
+  background-color: rgb(248, 134, 134);
+}
 /* edit button */
 .editting{
   background-color: rgb(84, 247, 84);
+}
+.hidden{
+  display: none;
 }
