@@ -1,16 +1,21 @@
-import { input, alert, todosContainer, clearTodosBtn } from "./script.js";
+import { input, alert, todosContainer } from "./script.js";
 import {
   store,
   toggleAlert,
   addTodoToList,
   editTodoOn,
   deleteTodo,
+  clearTodos,
 } from "../reduxStore.js";
 /**
  * Clears the to do input field after the user adds the to do to the list of to dos
  */
 export const clearTodoInputField = () => {
   input.value = store.getState().emptyInputFieldValue;
+};
+export const clearTodoList = () => {
+  store.dispatch(clearTodos());
+  displayTodoListItems();
 };
 /**
  * Displays alert when user adds an item to the list of todos
