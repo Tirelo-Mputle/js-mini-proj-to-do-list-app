@@ -66,7 +66,8 @@ export const addTodoItemToList = () => {
  */
 const editTodo = (e, todoItem) => {
   const todoText = todoItem.querySelector(".todo-text");
-  const editButton = e.target;
+  let editButton = e.target;
+  console.log(editButton);
   const edittingInput = todoText.querySelector(".edittingInput");
   const oldText = todoText.textContent;
   if (todoItem.classList.contains("edittingTodo")) {
@@ -83,7 +84,8 @@ const editTodo = (e, todoItem) => {
     displayTodoListItems();
   } else {
     todoItem.classList.add("edittingTodo");
-    editButton.textContent = "save?";
+    editButton.classList.remove("fa-solid", "fa-pen-to-square");
+    editButton.classList.add("fa-solid", "fa-check");
     //add an input box for user to edit to do
     todoText.innerHTML = `
     <input placeholder=${oldText} class="edittingInput"/>`;
@@ -109,8 +111,10 @@ export function displayTodoListItems() {
    
    <p class="todo-text">${todo.todoItem}</p>
    <div class="todoItemIcons">
-   <button data-action="edit">Edit</button>
-   <button data-action="delete">Delete</button>
+   
+   <i class="fa-solid fa-pen-to-square" data-action="edit"></i>   
+   
+   <i class="fa-solid fa-trash" data-action="delete"></i>
    </div>
    `;
       //editting and deleting functionality

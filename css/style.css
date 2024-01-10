@@ -41,10 +41,10 @@ main {
   height: 1.8rem;
   border-radius: 0.5rem;
 }
-.input {
+.input, .edittingInput {
   padding-left: 0.5rem;
 }
-.input:focus {
+.input:focus, .edittingInput:focus {
   outline: 2px solid var(--darkBlue);
   border: none;
   background-color: var(--inputBackground);
@@ -92,8 +92,24 @@ main {
 }
 /* edit button */
 .editting{
-  background-color: rgb(84, 247, 84);
+  color: rgb(84, 247, 84);
 }
 .hidden{
   display: none;
+
+}
+/* editting input box */
+.edittingInput{
+  padding: 0.4rem;
+}
+/* icons */
+.fa-solid:hover{
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+.fa-trash:hover{
+  color:rgb(255, 197, 197);
+}
+.fa-pen-to-square:hover{
+  color:rgb(145, 255, 145);
 }
