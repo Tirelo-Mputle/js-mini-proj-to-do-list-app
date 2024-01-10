@@ -3,10 +3,18 @@ import {
   configureStore,
 } from "https://cdn.jsdelivr.net/npm/@reduxjs/toolkit@2.0.1/+esm";
 
+/**
+ * Retrieves user's to do list from local storage
+ * @returns {Array}
+ */
+const getTodoListFromLocalStorage = () => {
+  return JSON.parse(localStorage.getItem("todoList"));
+};
+
 const todoSlice = createSlice({
   name: "todo",
   initialState: {
-    todoListItemsArray: [],
+    todoListItemsArray: getTodoListFromLocalStorage()||[],
     isAlertVisible: false,
     emptyInputFieldValue: "",
     editing: {

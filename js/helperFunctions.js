@@ -47,6 +47,15 @@ export const displayAlert = (colorClass, alertText) => {
     //cleartimeout
   }
 };
+/**
+ * Store to do list in local storage so that user to dos can persist after closing window.
+ */
+const storeTodoListInLocalStorage = () => {
+  localStorage.setItem(
+    "todoList",
+    JSON.stringify(store.getState().todoListItemsArray)
+  );
+};
 
 /**
  * Adds input to do value in the list of to dos to be displayed.
@@ -55,6 +64,7 @@ export const addTodoItemToList = () => {
   const todoItem = input.value;
   if (todoItem !== "") {
     store.dispatch(addTodoToList(todoItem));
+    storeTodoListInLocalStorage();
     displayAlert("alert-success", "Successfully added a to do to your list.");
     clearTodoInputField();
   }
