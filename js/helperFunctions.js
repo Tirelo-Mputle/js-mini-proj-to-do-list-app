@@ -1,4 +1,4 @@
-import { input, alert, todosContainer } from "./script.js";
+import { input, alert, todosContainer, clearBtn } from "./script.js";
 import {
   store,
   toggleAlert,
@@ -13,33 +13,36 @@ import {
 export const clearTodoInputField = () => {
   input.value = store.getState().emptyInputFieldValue;
 };
+/**
+ * Clears all the to do items in the list when the clear todos button is clicked
+ */
 export const clearTodoList = () => {
   store.dispatch(clearTodos());
   displayTodoListItems();
+  displayAlert("alert-danger", "Cleared all to dos in your list!");
+};
+/**
+ * Handles whether or not the clear to dos button should be displayed. It only displays when there are to dos displayed.
+ */
+const handleDisplayClearTodoListBtn = () => {
+  if (store.getState().todoListItemsArray.length === 0) {
+    clearBtn.classList.add("hidden");
+  } else {
+    clearBtn.classList.remove("hidden");
+  }
 };
 /**
  * Displays alert when user adds an item to the list of todos
  */
-export const displayAlert = (type) => {
+export const displayAlert = (colorClass, alertText) => {
   store.dispatch(toggleAlert());
   if (store.getState().isAlertVisible) {
-    let alertColor;
-    let alertText;
-    if (type === "addTodo") {
-      alertColor = "alert-success";
-      alertText = `Successfully added to do to list!`;
-    }
-    if (type === "deleteTodo") {
-      alertColor = "alert-delete";
-      alertText = `Deleted item from do to list!`;
-      console.log("deleting!!");
-    }
-    alert.classList.add(alertColor, "show-alert");
+    alert.classList.add(colorClass, "show-alert");
     alert.textContent = alertText;
     //remove alert after 3 seconds
     setTimeout(() => {
       store.dispatch(toggleAlert());
-      alert.classList.remove(alertColor, "show-alert");
+      alert.classList.remove(colorClass, "show-alert");
     }, 3000);
     //cleartimeout
   }
@@ -52,7 +55,7 @@ export const addTodoItemToList = () => {
   const todoItem = input.value;
   if (todoItem !== "") {
     store.dispatch(addTodoToList(todoItem));
-    displayAlert("addTodo");
+    displayAlert("alert-success", "Successfully added a to do to your list.");
     clearTodoInputField();
   }
 };
@@ -95,7 +98,7 @@ export function displayTodoListItems() {
   const fragment = new DocumentFragment();
   const todoList = store.getState().todoListItemsArray;
   if (todoList.length === 0) {
-    todosContainer.innerHTML = `<p>No to do added yet.</p>`;
+    todosContainer.innerHTML = `<p>Add items to your list.</p>`;
     // clearTodosBtn.classList.add("hidden");
   } else {
     todoList.forEach((todo) => {
@@ -119,7 +122,7 @@ export function displayTodoListItems() {
         }
         if (actionType === "delete") {
           store.dispatch(deleteTodo(todoItem.dataset.id));
-          displayAlert("deleteTodo");
+          displayAlert("alert-danger", "Deleted item from your list!");
           displayTodoListItems();
         }
       });
@@ -131,4 +134,5 @@ export function displayTodoListItems() {
     todosContainer.appendChild(fragment);
     // clearTodosBtn.classList.remove("hidden");
   }
+  handleDisplayClearTodoListBtn();
 }
