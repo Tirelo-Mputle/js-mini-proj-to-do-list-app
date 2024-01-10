@@ -8,7 +8,7 @@ import {
 // SELECTED ITEM
 const inputForm = document.querySelector("form");
 const submitBtn = document.querySelector(".submit-btn");
-const clearBtn = document.querySelector(".clear-todos-button");
+export const clearBtn = document.querySelector(".clear-todos-button");
 export const input = document.querySelector(".input");
 export const todosContainer = document.querySelector(".todos-container");
 export const alert = document.querySelector(".alert");
