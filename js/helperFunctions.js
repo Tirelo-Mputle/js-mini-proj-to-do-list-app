@@ -6,6 +6,7 @@ import {
   editTodoOn,
   deleteTodo,
   clearTodos,
+  getTodoListFromLocalStorage,
 } from "../reduxStore.js";
 /**
  * Clears the to do input field after the user adds the to do to the list of to dos
@@ -55,6 +56,7 @@ export const addTodoItemToList = () => {
   const todoItem = input.value;
   if (todoItem !== "") {
     store.dispatch(addTodoToList(todoItem));
+
     displayAlert("alert-success", "Successfully added a to do to your list.");
     clearTodoInputField();
   }
@@ -101,19 +103,15 @@ export function displayTodoListItems() {
   const todoList = store.getState().todoListItemsArray;
   if (todoList.length === 0) {
     todosContainer.innerHTML = `<p>Add items to your list.</p>`;
-    // clearTodosBtn.classList.add("hidden");
   } else {
     todoList.forEach((todo) => {
       const todoItem = document.createElement("li");
       todoItem.dataset.id = todo.id;
       todoItem.classList.add("todoListItem");
-      todoItem.innerHTML = `
-   
+      todoItem.innerHTML = `   
    <p class="todo-text">${todo.todoItem}</p>
-   <div class="todoItemIcons">
-   
-   <i class="fa-solid fa-pen-to-square" data-action="edit"></i>   
-   
+   <div class="todoItemIcons">   
+   <i class="fa-solid fa-pen-to-square" data-action="edit"></i>     
    <i class="fa-solid fa-trash" data-action="delete"></i>
    </div>
    `;
@@ -130,13 +128,10 @@ export function displayTodoListItems() {
           displayTodoListItems();
         }
       });
-      //    <i class="fa-solid fa-trash"></i>
-      //   <i class="fa-solid fa-pen-to-square"></i>
       fragment.appendChild(todoItem);
     });
     todosContainer.innerHTML = "";
     todosContainer.appendChild(fragment);
-    // clearTodosBtn.classList.remove("hidden");
   }
   handleDisplayClearTodoListBtn();
 }
