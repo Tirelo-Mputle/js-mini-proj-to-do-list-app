@@ -7,14 +7,20 @@ import {
  * Retrieves user's to do list from local storage
  * @returns {Array}
  */
-const getTodoListFromLocalStorage = () => {
+export const getTodoListFromLocalStorage = () => {
   return JSON.parse(localStorage.getItem("todoList"));
+};
+/**
+ * Store to do list in local storage so that user to dos can persist after closing window.
+ */
+const storeTodoListInLocalStorage = (todoListArray) => {
+  localStorage.setItem("todoList", JSON.stringify(todoListArray));
 };
 
 const todoSlice = createSlice({
   name: "todo",
   initialState: {
-    todoListItemsArray: getTodoListFromLocalStorage()||[],
+    todoListItemsArray: getTodoListFromLocalStorage() || [],
     isAlertVisible: false,
     emptyInputFieldValue: "",
     editing: {
@@ -29,6 +35,7 @@ const todoSlice = createSlice({
         ...state.todoListItemsArray,
         { todoItem: action.payload, id: crypto.randomUUID() },
       ];
+      storeTodoListInLocalStorage(state.todoListItemsArray);
     },
     toggleAlert: (state) => {
       state.isAlertVisible = !state.isAlertVisible;
@@ -41,6 +48,7 @@ const todoSlice = createSlice({
           return todo;
         }
       });
+      storeTodoListInLocalStorage(state.todoListItemsArray);
     },
     deleteTodo: (state, action) => {
       state.todoListItemsArray = state.todoListItemsArray.filter((todo) => {
@@ -48,9 +56,11 @@ const todoSlice = createSlice({
           return todo;
         }
       });
+      storeTodoListInLocalStorage(state.todoListItemsArray);
     },
     clearTodos: (state) => {
       state.todoListItemsArray = [];
+      storeTodoListInLocalStorage(state.todoListItemsArray);
     },
   },
 });
